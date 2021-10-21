@@ -2,7 +2,7 @@ import React from 'react';
 
 const Calculator = (props) => {
   return (
-    <div>Hello World</div>
+    <h1>Hello World</h1>
   )
 }
 

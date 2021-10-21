@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build-dev": "webpack",
+    "server": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

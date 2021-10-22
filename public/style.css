@@ -36,6 +36,7 @@ button {
   cursor: pointer;
   font-weight: lighter;
   font-size: 20px;
+  transition: background-color 200ms linear;
 }
 
 button:hover {
@@ -44,6 +45,13 @@ button:hover {
 }
 
 button:active {
-  background-color: red;
+  background-color: rgb(150, 23, 23);
+  color: white;
 }
+
+.pressed {
+  background-color: rgb(150, 23, 23);
+  color: white;
+}
+
 

@@ -4,6 +4,7 @@ export default function Calculator(props) {
 
   const [inputValue, updateInput] = useState('');
   const [selection, setSelection] = useState({start: 0, end: 0});
+  const [pressedKey, setPressedKey] = useState('');
 
   const inputs = [
     '(',
@@ -31,9 +32,12 @@ export default function Calculator(props) {
   const inputRef = useRef(null);
 
   const handleClick = (e) => {
-    console.log(e.target.id);
+    // store values for start and end points of current cursor selection.
     const selectStart = inputRef.current.selectionStart;
     const selectEnd = inputRef.current.selectionEnd;
+
+    // using selection coordinates, insert new input to existing value at correct position.
+    // allows insertion of new text at expected position with keypad button elements as well as your keyboard.
     const newInput = inputValue.slice(0, selectStart) + e.target.id + inputValue.slice(selectEnd);
 
     updateInput(newInput);
@@ -45,18 +49,16 @@ export default function Calculator(props) {
   }
 
   const restrictKeys = (e) => {
-    console.log(e.key)
-
     if (!inputs.includes(e.key)) {
       e.preventDefault();
     }
-
   }
 
   useEffect(() => {
     inputRef.current.focus();
     document.body.addEventListener("keypress", () => inputRef.current.focus());
-    //handle update to selection coords
+
+    // if cursor selection start/end has changed, set cursor to expected position on new render (rather than 0).
     const {start, end} = selection;
     inputRef.current.setSelectionRange(start + 1, start + 1);
   }, [selection])
@@ -69,12 +71,14 @@ export default function Calculator(props) {
       ref={inputRef}
       onChange={handleChange}
       onKeyPress={restrictKeys}
+      onKeyDown={(e) => setPressedKey(e.key)}
+      onKeyUp={() => setPressedKey('')}
       value={inputValue}
       />
       <div className="keypad" onClick={handleClick}>
         {inputs.map((input, i) => (
           <button
-          className={"btn"}
+          className={`btn ${pressedKey === input ? 'pressed' : ''} `}
           id={input}
           key={i}
           >

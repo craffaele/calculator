@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Calculator = (props) => {
+export default function Calculator(props) {
   return (
-    <h1>Hello World</h1>
+    <h1>Hello??</h1>
   )
 }
 

@@ -1,8 +1,42 @@
 import React from 'react';
 
 export default function Calculator(props) {
+  const inputs = [
+    '(',
+    ')',
+    '%',
+    'CE',
+    '7',
+    '8',
+    '9',
+    '/',
+    '4',
+    '5',
+    '6',
+    '*',
+    '1',
+    '2',
+    '3',
+    '-',
+    '=',
+    '.',
+    '0',
+    '+'
+  ];
+
   return (
-    <h1>Hello??</h1>
+    <div className="calc-box">
+      <input type="text" placeholder="0" />
+      <div className="keypad">
+        {inputs.map((input, i) => (
+          <button key={i}>{input}</button>
+        ))}
+      </div>
+      <div className="digits">
+
+      </div>
+
+    </div>
   )
 }
 

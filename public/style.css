@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+
+.calc-box {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 100px;
+  overflow: hidden;
+  font-size: 40pt;
+  height: 900px;
+}
+
+input {
+  height: 50px;
+  width: 100%;
+  font-size: 40px;
+  text-align: right;
+  font-weight: lighter;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  height: 300px;
+}
+
+button {
+  min-width: 40px;
+  border: none;
+  cursor: pointer;
+  font-weight: lighter;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+button:active {
+  background-color: red;
+}
+

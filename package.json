@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-dev": "webpack",
+    "build-dev": "webpack --mode=development --watch",
     "server": "nodemon server.js",
     "test": "jest"
   },

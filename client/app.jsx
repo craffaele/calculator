@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Calculator(props) {
+
+  const handleClick = (e) => {
+    console.log(e.target.id);
+  }
+
+  const handleKey = (e) => {
+    console.log(e.key);
+
+  }
+
   const inputs = [
     '(',
     ')',
@@ -18,24 +28,26 @@ export default function Calculator(props) {
     '2',
     '3',
     '-',
-    '=',
-    '.',
     '0',
+    '.',
+    '=',
     '+'
   ];
 
   return (
     <div className="calc-box">
-      <input type="text" placeholder="0" />
-      <div className="keypad">
+      <input type="text" placeholder="0" onKeyPress={handleKey} />
+      <div className="keypad" onClick={handleClick}>
         {inputs.map((input, i) => (
-          <button key={i}>{input}</button>
+          <button
+          className={"btn"}
+          id={input}
+          key={i}
+          >
+            {input}
+            </button>
         ))}
       </div>
-      <div className="digits">
-
-      </div>
-
     </div>
   )
 }

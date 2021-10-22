@@ -5,38 +5,6 @@ export default function Calculator(props) {
   const [inputValue, updateInput] = useState('');
   const [selection, setSelection] = useState({start: 0, end: 0});
 
-  const inputRef = useRef(null);
-
-  const handleClick = (e) => {
-    const cursorPosition = inputRef.current.selectionStart;
-    const selectStart = inputRef.current.selectionStart;
-    const selectEnd = inputRef.current.selectionEnd;
-    const newInput =
-    inputValue.slice(0, cursorPosition) + e.target.id + inputValue.slice(cursorPosition);
-
-    updateInput(newInput);
-    setSelection({start: selectStart, end: selectEnd});
-  }
-
-  const handleKey = (e) => {
-    console.log(e.key);
-    inputRef.current.focus();
-  }
-
-  const handleChange = (e) => {
-    updateInput(e.target.value);
-  }
-
-  useEffect(() => {
-    console.log('use effect called!')
-    console.log('selection log:', selection);
-    inputRef.current.focus();
-    document.body.addEventListener("keypress", handleKey);
-    //handle seletion coords
-    const {start, end} = selection;
-    inputRef.current.setSelectionRange(start + 1, end + 1);
-  }, [selection])
-
   const inputs = [
     '(',
     ')',
@@ -60,6 +28,39 @@ export default function Calculator(props) {
     '+'
   ];
 
+  const inputRef = useRef(null);
+
+  const handleClick = (e) => {
+    console.log(e.target.id);
+    const selectStart = inputRef.current.selectionStart;
+    const selectEnd = inputRef.current.selectionEnd;
+    const newInput = inputValue.slice(0, selectStart) + e.target.id + inputValue.slice(selectEnd);
+
+    updateInput(newInput);
+    setSelection({start: selectStart, end: selectEnd});
+  }
+
+  const handleChange = (e) => {
+    updateInput(e.target.value);
+  }
+
+  const restrictKeys = (e) => {
+    console.log(e.key)
+
+    if (!inputs.includes(e.key)) {
+      e.preventDefault();
+    }
+
+  }
+
+  useEffect(() => {
+    inputRef.current.focus();
+    document.body.addEventListener("keypress", () => inputRef.current.focus());
+    //handle update to selection coords
+    const {start, end} = selection;
+    inputRef.current.setSelectionRange(start + 1, start + 1);
+  }, [selection])
+
   return (
     <div className="calc-box">
       <input
@@ -67,6 +68,7 @@ export default function Calculator(props) {
       placeholder="0"
       ref={inputRef}
       onChange={handleChange}
+      onKeyPress={restrictKeys}
       value={inputValue}
       />
       <div className="keypad" onClick={handleClick}>

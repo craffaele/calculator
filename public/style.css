@@ -36,7 +36,7 @@ button {
   cursor: pointer;
   font-weight: lighter;
   font-size: 20px;
-  transition: background-color 200ms linear;
+  transition: background-color 100ms linear;
 }
 
 button:hover {

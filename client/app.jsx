@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Input from './components/Input.jsx';
+import Keypad from './components/Keypad.jsx';
 
 export default function Calculator(props) {
-
   const [inputValue, updateInput] = useState('');
   const [selection, setSelection] = useState({start: 0, end: 0});
   const [pressedKey, setPressedKey] = useState('');
@@ -28,7 +29,7 @@ export default function Calculator(props) {
     '=',
     '+'
   ];
-
+  // store reference to our input element.
   const inputRef = useRef(null);
 
   const handleClick = (e) => {
@@ -65,27 +66,18 @@ export default function Calculator(props) {
 
   return (
     <div className="calc-box">
-      <input
-      type="text"
-      placeholder="0"
-      ref={inputRef}
-      onChange={handleChange}
-      onKeyPress={restrictKeys}
-      onKeyDown={(e) => setPressedKey(e.key)}
-      onKeyUp={() => setPressedKey('')}
-      value={inputValue}
-      />
-      <div className="keypad" onClick={handleClick}>
-        {inputs.map((input, i) => (
-          <button
-          className={`btn ${pressedKey === input ? 'pressed' : ''} `}
-          id={input}
-          key={i}
-          >
-            {input}
-            </button>
-        ))}
-      </div>
+      <Input
+      inputRef={inputRef}
+      handleChange={handleChange}
+      restrictKeys={restrictKeys}
+      setPressedKey={setPressedKey}
+      inputValue={inputValue}
+       />
+      <Keypad
+      handleClick={handleClick}
+      inputs={inputs}
+      pressedKey={pressedKey}
+       />
     </div>
   )
 }

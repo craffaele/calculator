@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Keypad({inputs, inputValue, pressedKey, updateInput, filter}) {
+export default function Keypad({inputs, inputValue, pressedKey, updateInput, filter, submit}) {
 
   const handleClick = (e) => {
     const { id } = e.target;
+    // if '=' button is clicked, trigger submission of current input value.
+    if (id === '=') {
+      submit();
+      e.preventDefault();
+      return;
+    }
     let newInput;
     switch (id) {
       case 'CE' : newInput = inputValue.slice(0, -1); break;
       case 'AC' : newInput = ''; break;
       default: newInput = inputValue + id;
     }
-    // updateInput(newInput);
     filter(newInput);
   }
 

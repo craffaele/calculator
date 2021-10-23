@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Input({inputRef, inputs, setPressedKey, inputValue, updateInput, filter}) {
+export default function Input({inputRef, inputs, setPressedKey, inputValue, updateInput, filter, submit}) {
 
   const handleChange = (e) => {
     filter(e.target.value);
-    // updateInput(e.target.value);
   }
 
   const handlePressedKey = (e) => {
-    const pressedKey = e.key === 'Backspace' ? 'CE' : e.key;
+    // if enter or equals key is pressed, trigger submission of current input value.
+    if (e.key === 'Enter' || e.key === '=') {
+      e.preventDefault();
+      submit();
+      return;
+    }
 
+    const pressedKey = e.key === 'Backspace' ? 'CE' : e.key;
     // if input is not on our keypad, prevent entry.
     if (!inputs.includes(e.key) && e.key !== 'Backspace') {
       e.preventDefault();
@@ -18,8 +23,6 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault();
     }
-    // disallow more than one consecutive operator
-    // disallow unbalanced paren
     setPressedKey(pressedKey)
   }
 

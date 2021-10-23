@@ -1,6 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Keypad({handleClick, inputs, pressedKey, updateInput}) {
+export default function Keypad({inputs, inputValue, pressedKey, updateInput, filter}) {
+
+  const handleClick = (e) => {
+    const { id } = e.target;
+    let newInput;
+    switch (id) {
+      case 'CE' : newInput = inputValue.slice(0, -1); break;
+      case 'AC' : newInput = ''; break;
+      default: newInput = inputValue + id;
+    }
+    // updateInput(newInput);
+    filter(newInput);
+  }
 
   return (
     <div className="keypad" onClick={handleClick}>

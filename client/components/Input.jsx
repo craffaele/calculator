@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Input({inputRef, inputs, setPressedKey, inputValue, updateInput}) {
+export default function Input({inputRef, inputs, setPressedKey, inputValue, updateInput, filter}) {
 
   const handleChange = (e) => {
-    updateInput(e.target.value);
+    filter(e.target.value);
+    // updateInput(e.target.value);
   }
 
   const handlePressedKey = (e) => {
@@ -24,7 +25,7 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
 
   const restrictMouseDown = (e) => {
     // prevents user from moving text cursor by clicking within input field.
-    // the input field is re-focused on click.
+    // the input field is otherwise re-focused on click, with no other action taken.
     e.preventDefault();
     inputRef.current.focus();
   }

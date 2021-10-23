@@ -9,7 +9,7 @@ export default function Calculator(props) {
   const inputs = [
     '(',
     ')',
-    '%',
+    'AC',
     'CE',
     '7',
     '8',
@@ -28,19 +28,24 @@ export default function Calculator(props) {
     '=',
     '+'
   ];
-  // store ref to our input element.
-  // we need this to focus the input field on page load/ re-focusing on keypress.
+  // store refs to our input and calculator-container elements.
+  // we need the input ref to focus the input field on page load.
+  // we need the ref to our container to prevent user from un-focusing input field.
   const inputRef = useRef(null);
-  // we need this ref to our container to prevent user from un-focusing input field.
   const containerRef = useRef(null);
 
   const handleClick = (e) => {
-    const newInput = e.target.id;
-    updateInput(inputValue + newInput);
+    const { id } = e.target;
+    let newInput;
+    switch (id) {
+      case 'CE' : newInput = inputValue.slice(0, -1); break;
+      case 'AC' : newInput = ''; break;
+      default: newInput = inputValue + id;
+    }
+    updateInput(newInput);
   }
 
-  const preventUnfocus = (e) => {
-    console.log(e.target.classList)
+  const restrictUnfocus = (e) => {
     if (e.target.id === "app" || e.target.classList.contains("calc-container")) {
       e.preventDefault();
     }
@@ -48,7 +53,9 @@ export default function Calculator(props) {
 
   useEffect(() => {
     inputRef.current.focus();
-    document.body.addEventListener("mousedown", (e) => preventUnfocus(e));
+    document.body.addEventListener("mousedown", (e) => restrictUnfocus(e));
+    // document.body.addEventListener("keypress", (e) => inputRef.current.focus());
+
     // when inputValue is updated, move text cursor to starting position.
     inputRef.current.selectionStart = inputValue.length;
   }, [inputValue])

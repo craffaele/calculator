@@ -7,7 +7,8 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
   }
 
   const handlePressedKey = (e) => {
-    console.log(e.key)
+    const pressedKey = e.key === 'Backspace' ? 'CE' : e.key;
+
     // if input is not on our keypad, prevent entry.
     if (!inputs.includes(e.key) && e.key !== 'Backspace') {
       e.preventDefault();
@@ -16,11 +17,9 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault();
     }
-
     // disallow more than one consecutive operator
     // disallow unbalanced paren
-
-    setPressedKey(e.key)
+    setPressedKey(pressedKey)
   }
 
   const restrictMouseDown = (e) => {

@@ -4,9 +4,6 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
 
   const handleChange = (e) => {
     updateInput(e.target.value);
-    // disallow left and right arrow keys
-    // disallow more than one consecutive operator
-    // disallow unbalanced paren
   }
 
   const handlePressedKey = (e) => {
@@ -15,10 +12,14 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
     if (!inputs.includes(e.key) && e.key !== 'Backspace') {
       e.preventDefault();
     }
-    // do not allow left and right arrow keys
+    // do not allow left and right arrow keys.
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault();
     }
+
+    // disallow more than one consecutive operator
+    // disallow unbalanced paren
+
     setPressedKey(e.key)
   }
 

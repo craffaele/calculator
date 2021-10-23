@@ -4,7 +4,6 @@ import Keypad from './components/Keypad.jsx';
 
 export default function Calculator(props) {
   const [inputValue, updateInput] = useState('');
-  const [selection, setSelection] = useState({start: 0, end: 0});
   const [pressedKey, setPressedKey] = useState('');
 
   const inputs = [
@@ -29,31 +28,33 @@ export default function Calculator(props) {
     '=',
     '+'
   ];
-  // store ref to our input element. two reasons for this:
-  // (1) focusing the input field on page load/ re-focusing on keypress.
-  // (2) retrieving the text cursor position so we can take control of it.
+  // store ref to our input element.
+  // we need this to focus the input field on page load/ re-focusing on keypress.
   const inputRef = useRef(null);
+  // we need this ref to our container to prevent user from un-focusing input field.
+  const containerRef = useRef(null);
 
   const handleClick = (e) => {
-    // store values for start and end points of current text cursor selection.
-    const selectStart = inputRef.current.selectionStart;
-    const selectEnd = inputRef.current.selectionEnd;
+    const newInput = e.target.id;
+    updateInput(inputValue + newInput);
+  }
 
-    // using selection coordinates, insert new user input to existing value at correct position.
-    // allows insertion of new text at expected position with keypad clicks as well as user keyboard.
-    const newInput = inputValue.slice(0, selectStart) + e.target.id + inputValue.slice(selectEnd);
-
-    updateInput(newInput);
-    setSelection({start: selectStart, end: selectEnd});
+  const preventUnfocus = (e) => {
+    console.log(e.target.classList)
+    if (e.target.id === "app" || e.target.classList.contains("calc-container")) {
+      e.preventDefault();
+    }
   }
 
   useEffect(() => {
     inputRef.current.focus();
-    document.body.addEventListener("keypress", () => inputRef.current.focus());
-  })
+    document.body.addEventListener("mousedown", (e) => preventUnfocus(e));
+    // when inputValue is updated, move text cursor to starting position.
+    inputRef.current.selectionStart = inputValue.length;
+  }, [inputValue])
 
   return (
-    <div className="calc-box">
+    <div className="calc-container" ref={containerRef}>
       <Input
       inputRef={inputRef}
       setPressedKey={setPressedKey}

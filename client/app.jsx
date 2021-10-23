@@ -29,49 +29,37 @@ export default function Calculator(props) {
     '=',
     '+'
   ];
-  // store reference to our input element.
+  // store ref to our input element. two reasons for this:
+  // (1) focusing the input field on page load/ re-focusing on keypress.
+  // (2) retrieving the text cursor position so we can take control of it.
   const inputRef = useRef(null);
 
   const handleClick = (e) => {
-    // store values for start and end points of current cursor selection.
+    // store values for start and end points of current text cursor selection.
     const selectStart = inputRef.current.selectionStart;
     const selectEnd = inputRef.current.selectionEnd;
 
-    // using selection coordinates, insert new input to existing value at correct position.
-    // allows insertion of new text at expected position with keypad button elements as well as your keyboard.
+    // using selection coordinates, insert new user input to existing value at correct position.
+    // allows insertion of new text at expected position with keypad clicks as well as user keyboard.
     const newInput = inputValue.slice(0, selectStart) + e.target.id + inputValue.slice(selectEnd);
 
     updateInput(newInput);
     setSelection({start: selectStart, end: selectEnd});
   }
 
-  const handleChange = (e) => {
-    updateInput(e.target.value);
-  }
-
-  const restrictKeys = (e) => {
-    if (!inputs.includes(e.key)) {
-      e.preventDefault();
-    }
-  }
-
   useEffect(() => {
     inputRef.current.focus();
     document.body.addEventListener("keypress", () => inputRef.current.focus());
-
-    // if cursor selection start/end has changed, set cursor to expected position on new render (rather than 0).
-    const {start, end} = selection;
-    inputRef.current.setSelectionRange(start + 1, start + 1);
-  }, [selection])
+  })
 
   return (
     <div className="calc-box">
       <Input
       inputRef={inputRef}
-      handleChange={handleChange}
-      restrictKeys={restrictKeys}
       setPressedKey={setPressedKey}
       inputValue={inputValue}
+      inputs={inputs}
+      updateInput={updateInput}
        />
       <Keypad
       handleClick={handleClick}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Keypad({handleClick, inputs, pressedKey}) {
+export default function Keypad({handleClick, inputs, pressedKey, updateInput}) {
 
   return (
     <div className="keypad" onClick={handleClick}>

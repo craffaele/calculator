@@ -56,7 +56,6 @@ export default function Calculator(props) {
     // prevent sucessive operators.
     if (operators.includes(previousInputChar) && operators.includes(input.slice(-1))) {
       newInput = inputValue;
-      console.log('should prevent operator')
     }
       updateInput(newInput);
       inputRef.current.focus();
@@ -71,7 +70,7 @@ export default function Calculator(props) {
   const submitExpression = () => {
     const expression = encodeURIComponent(inputValue);
     axios.get(`/calculate?expression=${expression}`)
-      .then((response) => console.log('received response'))
+      .then((res) => updateInput(res.data.result))
   }
 
   useEffect(() => {
@@ -82,7 +81,10 @@ export default function Calculator(props) {
   }, [inputValue])
 
   return (
-    <div className="calc-container" ref={containerRef}>
+    <div
+    className="calc-container"
+    ref={containerRef}
+    >
       <Input
       inputRef={inputRef}
       setPressedKey={setPressedKey}

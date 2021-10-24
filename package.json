@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-dev": "webpack --mode=development --watch",
-    "server": "nodemon server.js",
+    "server": "nodemon server/server.js",
     "test": "jest"
   },
   "keywords": [],

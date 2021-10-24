@@ -1,33 +1,38 @@
 const evaluate = (expression) => {
   // const splitExpression = expression.split(/[^0-9\.]+/g);
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+\-/*()])/g);
-  stage(splitExpression);
+  const result = stage(splitExpression);
+  console.log('result:', result);
 }
 
 const stage = (exp) => {
-  const ops = ['*', '/', '+', '-'];
   console.log('solver log', exp);
+  const ops = ['*', '/', '+', '-'];
   // multiplication > division > addition > subtraction
   for (let op of ops) {
-    const opIndex = exp.indexOf(op);
-    if (opIndex !== -1) {
+    let opIndex = exp.indexOf(op);
+    while (opIndex !== -1) {
       console.log('includes', op);
-      const result = search(exp, op, opIndex)
+      exp = search(exp, op, opIndex);
+      opIndex = exp.indexOf(op);
+      console.log('mutated exp:', exp);
+      // reassign opIndex
+      opIndex = exp.indexOf(op, opIndex);
     }
   }
-  // console.log('index of *:', exp.indexOf('*'));
-  // console.log('index of /:', exp.indexOf('/'));
-  // console.log('index of +:', exp.indexOf('+'));
-  // console.log('index of -:', exp.indexOf('-'));
+  return exp[0];
 
 }
 
 const search = (exp, op, opIndex) => {
-  let firstVal = exp[opIndex-1];
-  let secondVal = exp[opIndex+1];
-  return solve(firstVal, secondVal, op);
+  let firstVal = Number(exp[opIndex-1]);
+  let secondVal = Number(exp[opIndex+1]);
+  // console.log('search log:', firstVal, secondVal);
+  // change exp in place—-replace expression tranche with eval
+  const trancheResult = solve(firstVal, secondVal, op);
+  exp.splice(opIndex - 1, 3, trancheResult);
+  return exp;
 
-  console.log('search log:', firstVal, secondVal);
 }
 
 const solve = (firstVal, secondVal, op) => {
@@ -37,7 +42,6 @@ const solve = (firstVal, secondVal, op) => {
     case '+' : return firstVal + secondVal;
     case '-' : return firstVal - secondVal;
   }
-
 }
 
 module.exports.evaluate = evaluate;

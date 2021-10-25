@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: rgb(155, 189, 255);
+}
+
 .calc-container {
   display: flex;
   flex-direction: column;
@@ -15,7 +19,7 @@
 input {
   height: 50px;
   width: 100%;
-  font-size: 40px;
+  font-size: 30px;
   text-align: right;
   font-weight: lighter;
 }
@@ -27,7 +31,6 @@ input {
   height: 300px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-
 }
 
 button {

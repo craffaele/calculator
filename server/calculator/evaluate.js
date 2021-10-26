@@ -1,5 +1,4 @@
 const solve = require('./solve');
-const stage = require('./stage');
 
 const evaluate = (expression) => {
   // if there are parens in the expression, pass them to our paren evaluator function,
@@ -37,7 +36,7 @@ const parseExpressions = (exp) => {
     let currentOp = exp[opIndex];
 
     while (opIndex !== -1) {
-      exp = stage(exp, currentOp, opIndex);
+      exp = solve(exp, currentOp, opIndex);
       // reassign opIndex
       opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));
       currentOp = exp[opIndex];

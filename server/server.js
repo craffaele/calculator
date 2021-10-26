@@ -1,5 +1,5 @@
 const express = require('express');
-const prepare = require('./calculator/prepare');
+const ratify = require('./calculator/ratify');
 const app = express()
 const port = 3000
 
@@ -10,10 +10,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/calculate', (req, res) => {
-  const expression = req.query.expression;
-  const result = prepare(expression);
+  const result = ratify(req.query.expression);
+  if (result === Infinity) {
+    res.send({result: '∞'});
+  } else {
+    res.send({result});
+  }
   console.log('FINAL RESULT:', result);
-  res.send({result});
 })
 
 app.listen(port, () => {

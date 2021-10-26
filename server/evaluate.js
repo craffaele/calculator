@@ -6,7 +6,10 @@ const evaluate = (expression) => {
     // otherwise, if the expression is already an array, we leave it alone.
   let newExpression;
   if (!Array.isArray(expression)) {
-    newExpression = expression.split(/(?=[+\-/*()])|(?<=[+\-/*()])/g);
+    // newExpression = expression.split(/(?=[+\-/*()])|(?<=[+\-/*()])/g);
+    newExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
+
+    console.log('splitExpression:', newExpression);
   } else {
     newExpression = expression;
   }
@@ -14,15 +17,16 @@ const evaluate = (expression) => {
   // if there are parens in the expression, pass them to our parser function,
     // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
     // these slices will be replaced in our larger expression with their resulting evaluations.
-  const parenStart = newExpression.indexOf('(');
-  if (parenStart !== -1) {
-    newExpression = evaluateParens(parenStart, newExpression);
-    return evaluate(newExpression);
-  }
 
-  const result = stage(newExpression);
-  console.log('result:', Number(result));
-  return result;
+  // const parenStart = newExpression.indexOf('(');
+  // if (parenStart !== -1) {
+  //   newExpression = evaluateParens(parenStart, newExpression);
+  //   return evaluate(newExpression);
+  // }
+
+  // const result = stage(newExpression);
+  // console.log('result:', Number(result));
+  return 10;
 }
 
 const stage = (exp) => {

@@ -1,7 +1,7 @@
-const express = require('express')
+const express = require('express');
+const prepare = require('./calculator/prepare');
 const app = express()
 const port = 3000
-const evaluate = require('./evaluate').evaluate;
 
 app.use(express.static('./public'))
 
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 app.get('/calculate', (req, res) => {
   const expression = req.query.expression;
   console.log('PING:', expression);
-  evaluate(expression);
+  prepare(expression);
   res.send({result: '10'});
 })
 

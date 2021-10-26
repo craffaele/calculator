@@ -10,22 +10,23 @@ const ratify = (expression) => {
       if (current === '(') {
         parenStack.push(current);
       } else if (current === ')') {
+        if (parenStack.length === 0) {
+          return false;
+        }
         parenStack.pop();
       }
     }
-    if (parenStack.length > 0) {
-      return false;
-    }
-    return true;
+    return parenStack.length > 0 ? false : true;
   };
-  console.log('parens are balanced:', checkBalancedParens);
+
   if (checkBalancedParens(expression) === false) {
+    console.log('parens are not balanced.')
     return 'Error: Parens are not balanced.';
   }
   // splits along operators while keeping them in as delimiters.
   // exception is '-', which are kept appended to beginning of integers.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
-  console.log('prepared expression:', splitExpression);
+  // console.log('prepared expression:', splitExpression);
 
 
   // insert '-' between any two integers wihtout operators between them.
@@ -34,7 +35,6 @@ const ratify = (expression) => {
   for (let i =0; i< splitExpression.length; i++) {
     let currentItem = splitExpression[i];
     let nextItem = splitExpression[i + 1];
-    console.log('item:', currentItem);
     formattedExpression.push(currentItem);
     if (!isNaN(Number(currentItem)) && !isNaN(Number(nextItem))) {
       formattedExpression.push('+');

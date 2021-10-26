@@ -1,10 +1,10 @@
 const solve = require('./solve');
 
 const stage = (exp, op, opIndex) => {
-  let firstVal = Number(exp[opIndex-1]);
-  let secondVal = Number(exp[opIndex+1]);
+  let firstInt = Number(exp[opIndex-1]);
+  let secondInt = Number(exp[opIndex+1]);
   // replace expression tranche with evaluation.
-  const sliceResult = solve(firstVal, secondVal, op);
+  const sliceResult = solve(firstInt, secondInt, op);
   exp.splice(opIndex - 1, 3, sliceResult);
   return exp;
 }

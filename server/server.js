@@ -11,9 +11,9 @@ app.get('/', (req, res) => {
 
 app.get('/calculate', (req, res) => {
   const expression = req.query.expression;
-  console.log('PING:', expression);
-  prepare(expression);
-  res.send({result: '10'});
+  const result = prepare(expression);
+  console.log('FINAL RESULT:', result);
+  res.send({result});
 })
 
 app.listen(port, () => {

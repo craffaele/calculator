@@ -2,29 +2,22 @@ const solve = require('./solve');
 const stage = require('./stage');
 
 const evaluate = (expression) => {
-  console.log('expression---------->', expression);
-
-  // if there are parens in the expression, pass them to our parser function,
+  // if there are parens in the expression, pass them to our paren evaluator function,
     // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
     // these slices will be replaced in our larger expression with their resulting evaluations.
-
   const parenStart = expression.indexOf('(');
   if (parenStart !== -1) {
     newExpression = evaluateParens(parenStart, expression);
     return evaluate(expression);
   }
-
-  const result = parseExpressions(expression);
-  console.log('result:', Number(result));
-  return 10;
+  return parseExpressions(expression);
 }
 
 const parseExpressions = (exp) => {
   const operators = [['*', '/'], ['+', '-']];
-  // handle all (multiplication, division) > then all (addition, subtraction)
   for (let op of operators) {
-    // we will address one set of operators at a time according to order of operations.
-    // all multiplication and division first left-to-right, then same for all addition and subtraction.
+    // address one set of operators at a time according to order of operations.
+    // handle all (multiplication, division) > then all (addition, subtraction)
     const findNextOperatorIndex = (exp, firstIndex, secondIndex) => {
       if (firstIndex === secondIndex) {
         // if these are equivalent, that means both indexes are -1, and thus neither operator is present.

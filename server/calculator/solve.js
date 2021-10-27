@@ -1,4 +1,5 @@
 const Decimal = require('decimal.js-light');
+Decimal.set({precision: 2});
 
 const solve = (exp, op, opIndex) => {
 

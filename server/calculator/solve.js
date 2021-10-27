@@ -1,11 +1,15 @@
+const Decimal = require('decimal.js-light');
+
 const solve = (exp, op, opIndex) => {
 
   const doTheMath = (firstVal, secondVal, operator) => {
+    // firstVal is used to construct a methodValue for access to precision methods.
+    const methodValue = new Decimal(firstVal);
     switch(operator) {
-      case '*' : return firstVal * secondVal;
-      case '/' : return firstVal / secondVal;
-      case '+' : return firstVal + secondVal;
-      case '-' : return firstVal - secondVal;
+      case '*' : return methodValue.mul(secondVal);
+      case '/' : return methodValue.div(secondVal);
+      case '+' : return methodValue.add(secondVal);
+      case '-' : return methodValue.sub(secondVal);
     }
   }
 

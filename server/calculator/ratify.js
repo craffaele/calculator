@@ -3,7 +3,7 @@ console.log('here:', evaluate);
 
 const ratify = (expression) => {
 
-  // check balanced parens
+  // check parens
   const checkBalancedParens = function(input, firstIndex) {
     let parenStack = [];
     for (let i = firstIndex; i < input.length; i++) {
@@ -23,7 +23,7 @@ const ratify = (expression) => {
   const parenStart = expression.indexOf('(');
   if (expression.indexOf('(') !== -1) {
     if (checkBalancedParens(expression, parenStart) === false) {
-      return 'Error: Parens not balanced.'
+      return 'Parens not balanced.'
     }
   }
 
@@ -33,7 +33,6 @@ const ratify = (expression) => {
   // console.log('prepared expression:', splitExpression);
 
   // insert '-' between any two integers wihtout operators between them.
-  // separate function??
   let formattedExpression = [];
   for (let i =0; i< splitExpression.length; i++) {
     let currentItem = splitExpression[i];
@@ -43,8 +42,7 @@ const ratify = (expression) => {
       formattedExpression.push('+');
     }
   }
-  console.log('formatted expression:', formattedExpression);
-  /// _____________________________________________________________
+  // console.log('formatted expression:', formattedExpression);
 
   return evaluate(formattedExpression);
 }

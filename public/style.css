@@ -19,9 +19,10 @@ body {
 input {
   height: 50px;
   width: 100%;
-  font-size: 30px;
+  font-size: 34px;
   text-align: right;
   font-weight: lighter;
+  outline: none;
 }
 
 .keypad {

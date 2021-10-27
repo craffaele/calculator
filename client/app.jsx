@@ -7,6 +7,7 @@ export default function Calculator(props) {
   const [inputValue, updateInput] = useState('');
   const [pressedKey, setPressedKey] = useState('');
   const [evaluation, setEval] = useState();
+  const [decimalAllowed, setDecimalAllowed] = useState(true);
 
   const inputs = [
     '(',
@@ -31,35 +32,111 @@ export default function Calculator(props) {
     '+'
   ];
 
-  // store refs to our input and calculator-container elements.
   // we need the input ref to focus the input field on page load.
-  // we need the container ref to prevent user from un-focusing input field.
   const inputRef = useRef(null);
+  // we need the container ref to prevent user from un-focusing input field.
   const containerRef = useRef(null);
 
-  // receives proposed changes to inputValue state from each of our components and sanitizes them.
+  // receives proposed changes to inputValue state from each of our components and restricts them.
   const filterOperatorInput = (input) => {
+    console.log(input.slice(-1));
+    // console.log('input length:', input.length);
+    // console.log('inputValue length:', inputValue.length);
+    // console.log(input.length < inputValue.length);
+
+
     const operators = [
       '-',
       '+',
       '*',
       '/',
-      '.',
-      '='
-    ]
+      '=',
+      '.'
+    ];
+
+    const parens = ['(', ')'];
+
     let newInput = input;
     const previousInputChar = inputValue.slice(-1);
-    // if input value is empty and first char is operator other than minus '-'...
-    if (inputValue === '' && operators.slice(1).includes(input)) {
-      newInput = '0' + input;
-    }
-    // prevent sucessive operators.
-    if (operators.includes(previousInputChar) && operators.includes(input.slice(-1))) {
+    const previousTwoInputChars = inputValue.slice(-2);
+    const currentInputChar = input.slice(-1);
+    const attemptingDelete = input.length < inputValue.length;
+    const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
+    console.log('current input char:', currentInputChar);
+    console.log('decimal allowed:', decimalAllowed);
+
+    // console.log('previous input char:', previousInputChar);
+    // console.log('current input:', input.slice(-1));
+    // console.log('input value:', inputValue);
+    // console.log('previous two input values:', previousTwoInputChars);
+    // console.log('attempting delete', attemptingDelete);
+
+    if (
+      //...we're at the beginning of a new expression, entering just an
+      // operator will stub out a new arithmetic string or float. example: 0+3 / 0.3
+      (newArithmeticString ||
+      (operators.slice(1).includes(previousInputChar) && currentInputChar === '.')  )
+      && operators.slice(1).includes(currentInputChar)
+      ) {
+        //provides for decimal restriction at beginning of expression as well.
+        if (currentInputChar === '.' && decimalAllowed) {
+          console.log('decimal is NOW restricted')
+          setDecimalAllowed(false);
+          newInput = input.slice(0, -1) + '0' + currentInputChar;
+        } else if (currentInputChar === '.' && !decimalAllowed) {
+          console.log('DING');
+          newInput = inputValue;
+        } else if (currentInputChar !== '.') {
+          // all other operators
+          newInput = input.slice(0, -1) + '0' + currentInputChar;
+        }
+    } else if (
+      (currentInputChar === '-' && previousTwoInputChars === '--' && !attemptingDelete)
+    ) {
+      console.log('trying to type more than double minus')
       newInput = inputValue;
+    } else if (
+      //...we're trying to enter an operator and the previous input was also an operator
+      // then don't allow entry. this prevents sucessive operators.
+      operators.includes(previousInputChar)
+      && operators.slice(1).includes(currentInputChar)
+      ) {
+      console.log('blocked');
+      newInput = inputValue;
+    } else if (
+      currentInputChar === '.'
+      && !decimalAllowed
+      && !attemptingDelete
+      ) {
+      //...we're trying to enter a decimal and we have already done as for this number, disallow.
+      // the length check provides a necessary exception for deleting.
+      newInput = inputValue;
+      console.log('decimal is not allowed');
+    } else if (
+      currentInputChar === '.'
+      && decimalAllowed
+      ) {
+      //...we're trying to enter a decimal and it's permitted, restrict for the rest this number.
+      console.log('decimal is now restricted.');
+        setDecimalAllowed(false);
+    } else if (input.length < inputValue.length && !decimalAllowed) {
+      ///...the length of our input is less than that stored in state and decimal is not allowed,
+      // it means we're trying to delete a decimal. allow it.
+      console.log('trying to delete');
+      setDecimalAllowed(true);
+    } else if (
+      //...we open a set of parens, allow decimal entry again for this new number.
+      (operators.slice(0, -1).includes(currentInputChar) || parens.includes(currentInputChar))
+      && !decimalAllowed
+    ) {
+      console.log('decimal is allowed now.')
+        setDecimalAllowed(true);
     }
-      updateInput(newInput);
-      inputRef.current.focus();
-    }
+
+
+    updateInput(newInput);
+    inputRef.current.focus();
+  }
 
   const restrictInputUnfocus = (e) => {
     if (e.target.id === "app" || e.target.classList.contains("calc-container")) {
@@ -70,7 +147,26 @@ export default function Calculator(props) {
   const submitExpression = () => {
     const expression = encodeURIComponent(inputValue);
     axios.get(`/calculate?expression=${expression}`)
-      .then((res) => updateInput(res.data.result))
+      .then((res) => {
+        console.log('result on client:', res.data.result);
+        let updatedDisplay;
+        if (res === '∞') {
+          updatedDisplay = res.data.result;
+        } else if (res.data.result === 'Parens not balanced.') {
+          console.log('ding');
+          throw res.data.result;
+        } else {
+          updatedDisplay = res.data.result.toString();
+        }
+        updateInput(updatedDisplay);
+      })
+      .catch((err) => {
+        if (err !== 'Parens not balanced.') {
+          err = 'Invalid input.';
+        }
+        alert(err);
+        updateInput('');
+      })
   }
 
   useEffect(() => {

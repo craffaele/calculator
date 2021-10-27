@@ -1,13 +1,17 @@
 const solve = require('./solve');
 
 const evaluate = (expression) => {
+
   // if there are parens in the expression, pass them to our paren evaluator function,
-    // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
-    // these slices will be replaced in our larger expression with their resulting evaluations.
+  // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
+  // these slices will be replaced in our larger expression with their resulting evaluations.
+  // although we've previously checked for parens in our ratify function, we need another check here given
+  // the recursive nature of this evaluate function.
+
   const parenStart = expression.indexOf('(');
   if (parenStart !== -1) {
-    newExpression = evaluateParens(parenStart, expression);
-    return evaluate(expression);
+    const newExpression = evaluateParens(parenStart, expression);
+    return evaluate(newExpression);
   }
   return parseExpressions(expression);
 }
@@ -15,11 +19,10 @@ const evaluate = (expression) => {
 const parseExpressions = (exp) => {
   const operators = [['*', '/'], ['+', '-']];
   for (let op of operators) {
-    // address one set of operators at a time according to order of operations.
     // handle all (multiplication, division) > then all (addition, subtraction)
     const findNextOperatorIndex = (exp, firstIndex, secondIndex) => {
       if (firstIndex === secondIndex) {
-        // if these are equivalent, that means both indexes are -1, and thus neither operator is present.
+        // if these are equivalent then both indexes are -1, and thus neither operator is present.
         return -1;
       } else if (firstIndex === -1 || secondIndex === -1) {
         // whereas if just one of the indexes is -1, the greater of the two is the index of the present operator.
@@ -65,6 +68,6 @@ const evaluateParens = (firstOpenIndex, exp) => {
   }
 }
 
-module.exports.evaluate = evaluate;
+module.exports = evaluate;
 
 

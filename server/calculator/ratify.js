@@ -1,11 +1,12 @@
-const evaluate = require('./evaluate').evaluate;
+const evaluate = require('./evaluate');
+console.log('here:', evaluate);
 
 const ratify = (expression) => {
 
   // check balanced parens
-  const checkBalancedParens = function(input) {
+  const checkBalancedParens = function(input, firstIndex) {
     let parenStack = [];
-    for (let i = 0; i < input.length; i++) {
+    for (let i = firstIndex; i < input.length; i++) {
       let current = input[i];
       if (current === '(') {
         parenStack.push(current);
@@ -19,15 +20,17 @@ const ratify = (expression) => {
     return parenStack.length > 0 ? false : true;
   };
 
-  if (checkBalancedParens(expression) === false) {
-    console.log('parens are not balanced.')
-    return 'Error: Parens are not balanced.';
+  const parenStart = expression.indexOf('(');
+  if (expression.indexOf('(') !== -1) {
+    if (checkBalancedParens(expression, parenStart) === false) {
+      return 'Error: Parens not balanced.'
+    }
   }
+
   // splits along operators while keeping them in as delimiters.
   // exception is '-', which are kept appended to beginning of integers.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
   // console.log('prepared expression:', splitExpression);
-
 
   // insert '-' between any two integers wihtout operators between them.
   // separate function??
@@ -42,7 +45,6 @@ const ratify = (expression) => {
   }
   console.log('formatted expression:', formattedExpression);
   /// _____________________________________________________________
-
 
   return evaluate(formattedExpression);
 }

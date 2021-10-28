@@ -1,26 +1,20 @@
 # calculator
 
 <img src="screenshot.png" width="500">
- Deployed application here: http://3.219.168.222:3000/
-
-## Table of Contents
-
-1. [Overview](#Overview)
-1. [Requirements](#Requirements)
-1. [Usage](#Usage)
-1. [Technologies](#technologies)
+ Deployed application here: http://3.219.168.222:3000
 
 ## Overview
 
 Simple calculator with minimal erroring.
 
 - Handles basic arithmetic operations (+ - / *) and nested parens.
-- Controlled input reduces the incidence of errors and makes for an intuitive user experience.
+- Controlled input significantly reduces the incidence of errors and makes for an intuitive user experience.
 - Responsive keypad view highlights user keypresses. 
 
 ## Usage
 
-
+- Beginning an entry with just an operator/ decimal will stub out an expression or float for you. Ex: 0+3 or 0.3
+- Submit entry for evaluation with Enter or '='.
 
 ## Installation
 
@@ -40,6 +34,7 @@ Simple calculator with minimal erroring.
 - Express
 - AWS EC2
 - Babel
-- Jest & Enzyme
+- Jest
+- Docker
 - Node.js
 - sinful-math

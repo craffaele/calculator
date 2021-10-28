@@ -3,13 +3,6 @@
 <img src="screenshot.png" width="500">
  Deployed application here: http://3.219.168.222:3000/
 
-## Table of Contents
-
-1. [Overview](#Overview)
-1. [Usage](#Usage)
-1. [Installation](#Installation)
-1. [Technologies](#technologies)
-
 ## Overview
 
 Simple calculator with minimal erroring.

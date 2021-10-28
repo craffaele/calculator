@@ -13,7 +13,7 @@ Simple calculator with minimal erroring.
 
 ## Usage
 
-- Beginning your entry with just an operator/ decimal will stub out an expression or float for you. Ex: 0+3 or 0.3
+- Beginning an entry with just an operator/ decimal will stub out an expression or float for you. Ex: 0+3 or 0.3
 - Submit entry for evaluation with Enter or '='.
 
 ## Installation

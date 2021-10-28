@@ -6,7 +6,6 @@ import axios from 'axios';
 export default function Calculator(props) {
   const [inputValue, updateInput] = useState('');
   const [pressedKey, setPressedKey] = useState('');
-  const [evaluation, setEval] = useState();
   const [decimalAllowed, setDecimalAllowed] = useState(true);
 
   const inputs = [
@@ -155,6 +154,7 @@ export default function Calculator(props) {
     document.body.addEventListener("mousedown", (e) => restrictInputUnfocus(e));
     // when inputValue is updated, move text cursor to starting position.
     inputRef.current.selectionStart = inputValue.length;
+
     // clean up event listener
     return () => {
       document.body.removeEventListener("mousedown", restrictInputUnfocus);

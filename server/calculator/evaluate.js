@@ -20,7 +20,7 @@ const evaluate = (expression) => {
     }
   }
 
-  // if there are parens in this expression, pass them to our paren evaluator function,
+  // if there are parens in this expression, pass them to our paren evaluator function above,
   // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
   // these slices will be replaced in our larger expression with their resulting evaluations.
 

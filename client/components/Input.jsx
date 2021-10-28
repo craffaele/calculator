@@ -14,7 +14,7 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
       return;
     }
 
-    const pressedKey = e.key === 'Backspace' ? 'CE' : e.key;
+  const pressedKey = e.key === 'Backspace' ? 'CE' : e.key;
     // if input is not on our keypad, prevent entry.
     if (!inputs.includes(e.key) && e.key !== 'Backspace') {
       e.preventDefault();

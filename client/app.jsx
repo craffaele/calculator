@@ -59,9 +59,6 @@ export default function Calculator(props) {
     const currentInputChar = input.slice(-1);
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
-    console.log('input value:', inputValue)
-    console.log('input:', input)
-
 
     if (
       //...we're at the beginning of a new string, entering just an
@@ -117,7 +114,6 @@ export default function Calculator(props) {
     ) {
         setDecimalAllowed(true);
     } else if (inputValue === '∞') {
-      console.log('equals infinity');
       newInput = input.slice(1);
     }
     // finally, submit new input to state.

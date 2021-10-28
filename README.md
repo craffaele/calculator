@@ -18,12 +18,18 @@ Simple calculator with minimal erroring.
 - Controlled input reduces the incidence of errors and makes for an intuitive user experience.
 - Responsive keypad view highlights user keypresses. 
 
-
 ## Usage
 
-1. Build webpack bundle with watch flag: 
+
+
+## Installation
+
+1. Clone down repository.
+2. Install dependencies: 
+```npm install````
+4. Build webpack bundle with watch flag: 
 ```npm run build ```
-2. Start the nodemon server:
+2. Start the server:
 ````npm run server````
 
 ## Technologies

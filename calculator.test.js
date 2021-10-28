@@ -53,7 +53,6 @@ describe ('parens', () => {
   });
 });
 
-
 describe ('floats', () => {
   it ('should handle floats with precision', () => {
     expect(ratify('0.1+0.2')).toBe(0.3);

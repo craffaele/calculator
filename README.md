@@ -21,9 +21,9 @@ Simple calculator with minimal erroring.
 
 ## Usage
 
-1.Build webpack bundle with watch flag: 
+1. Build webpack bundle with watch flag: 
 ```npm run build ```
-2.Start the nodemon server:
+2. Start the nodemon server:
 ````npm run server````
 
 ## Technologies

@@ -14,7 +14,7 @@
 
 Simple calculator with minimal erroring.
 
-- Handles basic arithmetic operations (+, -, /, *) and nested parens.
+- Handles basic arithmetic operations (+ - / *) and nested parens.
 - Controlled input reduces the incidence of errors and makes for an intuitive user experience.
 - Responsive keypad view highlights user keypresses. 
 

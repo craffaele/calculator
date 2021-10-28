@@ -6,8 +6,8 @@
 ## Table of Contents
 
 1. [Overview](#Overview)
-1. [Requirements](#Requirements)
 1. [Usage](#Usage)
+1. [Installation](#Installation)
 1. [Technologies](#technologies)
 
 ## Overview

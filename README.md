@@ -26,7 +26,7 @@ Simple calculator with minimal erroring.
 
 1. Clone down repository.
 2. Install dependencies: 
-```npm install````
+```npm install```
 4. Build webpack bundle with watch flag: 
 ```npm run build ```
 2. Start the server:

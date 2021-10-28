@@ -13,10 +13,9 @@ const solve = (exp, op, opIndex) => {
       case '-' : return methodValue.sub(secondVal);
     }
   }
-
   let firstInt = Number(exp[opIndex-1]);
   let secondInt = Number(exp[opIndex+1]);
-  // replace expression tranche with evaluation.
+  // replace expression slice with evaluation.
   const sliceResult = doTheMath(firstInt, secondInt, op);
   exp.splice(opIndex - 1, 3, sliceResult);
   return exp;

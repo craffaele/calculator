@@ -37,13 +37,12 @@ export default function Calculator(props) {
   // we need the container ref to prevent user from un-focusing input field.
   const containerRef = useRef(null);
 
-  // receives proposed changes to inputValue state from each of our components and restricts them.
+  // receives proposed changes to inputValue state from each of our components and filters/restricts them.
+  // this admittedly brash code serves the purpose of significantly restricting
+  // user input of operators to reduce the potential for errors, which preserves server resources
+  // and makes for a more intuitive user experience. with more time and code review, I would seek to
+  // further untangle and improve this code while preserving its functionality.
   const filterOperatorInput = (input) => {
-    console.log(input.slice(-1));
-    // console.log('input length:', input.length);
-    // console.log('inputValue length:', inputValue.length);
-    // console.log(input.length < inputValue.length);
-
 
     const operators = [
       '-',
@@ -53,87 +52,69 @@ export default function Calculator(props) {
       '=',
       '.'
     ];
-
     const parens = ['(', ')'];
-
     let newInput = input;
     const previousInputChar = inputValue.slice(-1);
     const previousTwoInputChars = inputValue.slice(-2);
     const currentInputChar = input.slice(-1);
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
-    console.log('current input char:', currentInputChar);
-    console.log('decimal allowed:', decimalAllowed);
-
-    // console.log('previous input char:', previousInputChar);
-    // console.log('current input:', input.slice(-1));
-    // console.log('input value:', inputValue);
-    // console.log('previous two input values:', previousTwoInputChars);
-    // console.log('attempting delete', attemptingDelete);
 
     if (
-      //...we're at the beginning of a new expression, entering just an
-      // operator will stub out a new arithmetic string or float. example: 0+3 / 0.3
+      //...we're at the beginning of a new string, entering just an
+      // operator will stub out a new arithmetic string or float. ex: 0+3 or 0.3
       (newArithmeticString ||
       (operators.slice(1).includes(previousInputChar) && currentInputChar === '.')  )
       && operators.slice(1).includes(currentInputChar)
       ) {
         //provides for decimal restriction at beginning of expression as well.
         if (currentInputChar === '.' && decimalAllowed) {
-          console.log('decimal is NOW restricted')
           setDecimalAllowed(false);
           newInput = input.slice(0, -1) + '0' + currentInputChar;
         } else if (currentInputChar === '.' && !decimalAllowed) {
-          console.log('DING');
           newInput = inputValue;
-        } else if (currentInputChar !== '.') {
-          // all other operators
+        } else if (currentInputChar !== '.' && previousInputChar !== ')') {
+          // all other operators or after paren context.
           newInput = input.slice(0, -1) + '0' + currentInputChar;
         }
     } else if (
-      (currentInputChar === '-' && previousTwoInputChars === '--' && !attemptingDelete)
+      //...we're trying to enter more than two consecutive minus operators, don't allow it.
+      currentInputChar === '-'
+      && previousTwoInputChars === '--'
+      && !attemptingDelete
     ) {
-      console.log('trying to type more than double minus')
       newInput = inputValue;
     } else if (
       //...we're trying to enter an operator and the previous input was also an operator
-      // then don't allow entry. this prevents sucessive operators.
+      // don't allow entry. this prevents input of sucessive operators generally.
       operators.includes(previousInputChar)
       && operators.slice(1).includes(currentInputChar)
       ) {
-      console.log('blocked');
       newInput = inputValue;
     } else if (
       currentInputChar === '.'
       && !decimalAllowed
       && !attemptingDelete
       ) {
-      //...we're trying to enter a decimal and we have already done as for this number, disallow.
-      // the length check provides a necessary exception for deleting.
+      //...we're trying to enter a decimal and we have already done so for this number string, disallow.
       newInput = inputValue;
-      console.log('decimal is not allowed');
     } else if (
       currentInputChar === '.'
       && decimalAllowed
       ) {
-      //...we're trying to enter a decimal and it's permitted, restrict for the rest this number.
-      console.log('decimal is now restricted.');
+      //...we're trying to enter a decimal and it's permitted, restrict for the rest of this number.
         setDecimalAllowed(false);
-    } else if (input.length < inputValue.length && !decimalAllowed) {
-      ///...the length of our input is less than that stored in state and decimal is not allowed,
-      // it means we're trying to delete a decimal. allow it.
-      console.log('trying to delete');
-      setDecimalAllowed(true);
+    } else if (attemptingDelete && !decimalAllowed) {
+      //...make sure we don't block deletion after entering decimal.
+        setDecimalAllowed(true);
     } else if (
-      //...we open a set of parens, allow decimal entry again for this new number.
+      //...we open a set of parens, allow decimal entry again for this new number string.
       (operators.slice(0, -1).includes(currentInputChar) || parens.includes(currentInputChar))
       && !decimalAllowed
     ) {
-      console.log('decimal is allowed now.')
         setDecimalAllowed(true);
     }
-
-
+    // finally, submit new input to state.
     updateInput(newInput);
     inputRef.current.focus();
   }

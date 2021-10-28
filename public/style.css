@@ -1,15 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: rgb(155, 189, 255);
+  background-color: rgb(32, 32, 32)
 }
 
 .calc-container {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 425px;
   margin: 0 auto;
   padding-top: 120px;
   overflow: hidden;
@@ -19,10 +22,13 @@ body {
 input {
   height: 50px;
   width: 100%;
-  font-size: 34px;
+  font-size: 30px;
   text-align: right;
   font-weight: lighter;
   outline: none;
+  margin: auto;
+  font-family: 'Orbitron', sans-serif;
+  background-color: whitesmoke;
 }
 
 .keypad {
@@ -30,8 +36,6 @@ input {
   grid-template-columns: repeat(4, 1fr);
   overflow: hidden;
   height: 300px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 
 button {
@@ -40,21 +44,22 @@ button {
   cursor: pointer;
   font-weight: lighter;
   font-size: 20px;
+  background-color: rgb(48, 47, 47);
+  color: white;
   transition: background-color 100ms linear;
+  border: solid thin rgb(26, 111, 167);
 }
 
 button:hover {
-  background-color: black;
-  color: white;
+  background-color: whitesmoke;
 }
 
 button:active {
-  background-color: rgb(150, 23, 23);
-  color: white;
+  background-color: rgb(100, 187, 245);
 }
 
 .pressed {
-  background-color: rgb(150, 23, 23);
+  background-color: rgb(100, 187, 245);
   color: white;
 }
 

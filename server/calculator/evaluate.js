@@ -1,10 +1,13 @@
 const solve = require('./solve');
 
+// CHRISTOPHER: NEST ALL OF THESE WITHIN EVALUATE
+
 const evaluate = (expression) => {
 
   // if there are parens in the expression, pass them to our paren evaluator function,
   // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
   // these slices will be replaced in our larger expression with their resulting evaluations.
+
   // although we've previously checked for parens in our ratify function, we need another check here given
   // the recursive nature of this evaluate function.
 
@@ -19,10 +22,10 @@ const evaluate = (expression) => {
 const parseExpressions = (exp) => {
   const operators = [['*', '/'], ['+', '-']];
   for (let op of operators) {
-    // handle all (multiplication, division) > then all (addition, subtraction)
+    // handle all (multiplication, division) --> then all (addition, subtraction)
     const findNextOperatorIndex = (exp, firstIndex, secondIndex) => {
       if (firstIndex === secondIndex) {
-        // if these are equivalent then both indexes are -1, and thus neither operator is present.
+        // if these values are equivalent then both indexes are -1, and thus neither operator is present.
         return -1;
       } else if (firstIndex === -1 || secondIndex === -1) {
         // whereas if just one of the indexes is -1, the greater of the two is the index of the present operator.
@@ -33,20 +36,20 @@ const parseExpressions = (exp) => {
         return Math.min( exp.indexOf(op[0]), exp.indexOf(op[1]) );
       }
     }
-    // retrieve here the index of the operator we need to deal with now...
+    // retrieve the index of the operator we need to deal with now...
     let opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));
     /// and using that index, store a reference to the operator itself as well.
     let currentOp = exp[opIndex];
 
     while (opIndex !== -1) {
       exp = solve(exp, currentOp, opIndex);
-      // reassign opIndex
+      // reassign operator index.
       opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));
       currentOp = exp[opIndex];
     }
   }
-  // since any items left in this array will have been evaluated to integers and stripped of any parens,
-  // reducing the remaining items with multiplication will handle * functionality for parens.
+  // since any items left in this array will have been evaluated to integers and stripped of parens,
+  // reducing the remaining items array with multiplication will handle * functionality for parens.
   return exp.reduce((a, b) => a * b);
 }
 

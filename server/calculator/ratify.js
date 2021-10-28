@@ -3,7 +3,7 @@ console.log('here:', evaluate);
 
 const ratify = (expression) => {
 
-  // check parens first. if they aren't balanced, we're done here.
+  // check parens first. if they aren't balanced, we're done here!
   const checkBalancedParens = function(input, firstIndex) {
     let parenStack = [];
     for (let i = firstIndex; i < input.length; i++) {
@@ -27,11 +27,13 @@ const ratify = (expression) => {
     }
   }
 
-  // splits along operators while keeping them in as delimiters.
-  // exception is '-', which are kept appended to beginning of integers.
+  // splits arithmetic string along operators while keeping the operators in as delimiters.
+  // exception is '-', which is kept appended to beginning of integer strings.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
 
   // insert '-' between any two integers wihtout operators between them.
+  // this would be owing to the fact that '-' remains attached to integers.
+  // instead of subtracting per se, in most cases we're adding negatives together.
   let formattedExpression = [];
   for (let i =0; i< splitExpression.length; i++) {
     let currentItem = splitExpression[i];

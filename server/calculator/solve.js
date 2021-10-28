@@ -1,6 +1,5 @@
 const { mul, div, add, sub } = require('sinful-math');
 
-
 const solve = (exp, op, opIndex) => {
 
   const doTheMath = (firstVal, secondVal, operator) => {

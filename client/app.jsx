@@ -155,6 +155,10 @@ export default function Calculator(props) {
     document.body.addEventListener("mousedown", (e) => restrictInputUnfocus(e));
     // when inputValue is updated, move text cursor to starting position.
     inputRef.current.selectionStart = inputValue.length;
+    // clean up event listener
+    return () => {
+      document.body.removeEventListener("mousedown", restrictInputUnfocus);
+    }
   }, [inputValue])
 
   return (

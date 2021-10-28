@@ -1,16 +1,14 @@
-const Decimal = require('decimal.js-light');
-Decimal.set({precision: 2});
+const { mul, div, add, sub } = require('sinful-math');
+
 
 const solve = (exp, op, opIndex) => {
 
   const doTheMath = (firstVal, secondVal, operator) => {
-    // firstVal is used to construct a methodValue for access to precision methods.
-    const methodValue = new Decimal(firstVal);
     switch(operator) {
-      case '*' : return methodValue.mul(secondVal);
-      case '/' : return methodValue.div(secondVal);
-      case '+' : return methodValue.add(secondVal);
-      case '-' : return methodValue.sub(secondVal);
+      case '*' : return mul(firstVal, secondVal);
+      case '/' : return div(firstVal, secondVal);
+      case '+' : return add(firstVal, secondVal);
+      case '-' : return sub(firstVal, secondVal);
     }
   }
   let firstInt = Number(exp[opIndex-1]);

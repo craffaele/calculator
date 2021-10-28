@@ -1,5 +1,4 @@
 const evaluate = require('./evaluate');
-console.log('here:', evaluate);
 
 const ratify = (expression) => {
 

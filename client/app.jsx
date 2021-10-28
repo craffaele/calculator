@@ -59,6 +59,9 @@ export default function Calculator(props) {
     const currentInputChar = input.slice(-1);
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
+    console.log('input value:', inputValue)
+    console.log('input:', input)
+
 
     if (
       //...we're at the beginning of a new string, entering just an
@@ -113,6 +116,9 @@ export default function Calculator(props) {
       && !decimalAllowed
     ) {
         setDecimalAllowed(true);
+    } else if (inputValue === '∞') {
+      console.log('equals infinity');
+      newInput = input.slice(1);
     }
     // finally, submit new input to state.
     updateInput(newInput);
@@ -129,12 +135,10 @@ export default function Calculator(props) {
     const expression = encodeURIComponent(inputValue);
     axios.get(`/calculate?expression=${expression}`)
       .then((res) => {
-        console.log('result on client:', res.data.result);
         let updatedDisplay;
         if (res === '∞') {
           updatedDisplay = res.data.result;
         } else if (res.data.result === 'Parens not balanced.') {
-          console.log('ding');
           throw res.data.result;
         } else {
           updatedDisplay = res.data.result.toString();

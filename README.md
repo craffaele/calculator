@@ -12,7 +12,7 @@
 
 ## Overview
 
-Simple calcualtor with minimal erroring.
+Simple calculator with minimal erroring.
 
 -Handles basic arithmetic operatios (+, -, /, *) and nested parens.
 -Controlled input reduces the incidence of errors and makes for an intuitive user experience.

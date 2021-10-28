@@ -1,7 +1,7 @@
 # calculator
 
 <img src="screenshot.png" width="500">
- Deployed application here: http://3.219.168.222:3000/
+ Deployed application here: http://3.219.168.222:3000
 
 ## Overview
 

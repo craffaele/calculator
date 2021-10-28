@@ -34,6 +34,7 @@ Simple calculator with minimal erroring.
 - Express
 - AWS EC2
 - Babel
-- Jest & Enzyme
+- Jest
+- Docker
 - Node.js
 - sinful-math

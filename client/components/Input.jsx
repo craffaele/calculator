@@ -36,7 +36,7 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
   return (
     <input
     type="text"
-    maxLength="20"
+    maxLength="23"
     placeholder="0"
     ref={inputRef}
     onChange={handleChange}

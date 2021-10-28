@@ -22,10 +22,13 @@ body {
 input {
   height: 50px;
   width: 100%;
-  font-size: 30px;
+  font-size: 26px;
   text-align: right;
   font-weight: lighter;
   outline: none;
+  border-top: solid thin rgb(26, 111, 167);
+  border-left: solid rgb(26, 111, 167);
+  border-right: solid rgb(26, 111, 167);
   margin: auto;
   font-family: 'Orbitron', sans-serif;
   background-color: whitesmoke;
@@ -52,6 +55,7 @@ button {
 
 button:hover {
   background-color: whitesmoke;
+  color: black;
 }
 
 button:active {
@@ -60,7 +64,6 @@ button:active {
 
 .pressed {
   background-color: rgb(100, 187, 245);
-  color: white;
 }
 
 

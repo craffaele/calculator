@@ -12,9 +12,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/calculate', (req, res) => {
-  console.log('ping:', req.query.expression);
   const result = format(req.query.expression);
-  console.log('FINAL RESULT:', typeof result, result);
   if (result === Infinity) {
     res.send({result: '∞'});
   } else {

@@ -58,7 +58,6 @@ const format = (expression) => {
       formattedExpression.push('+');
     }
   }
-  console.log('formatted expression:', formattedExpression);
   // proceed to evaluation with formatted expression.
   return evaluate(formattedExpression);
 }

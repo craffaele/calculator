@@ -16,6 +16,8 @@ Simple calculator with minimal erroring.
 - Beginning an entry with just an operator/ decimal will stub out an expression or float for you. Ex: 0+3 or 0.3
 - Submit entry for evaluation with Enter or '='.
 
+Controlled input prohibits entry of any non-numeric or non-operator characters. More than one successive operator is disallowed with the exception of '-'.
+
 ## Installation
 
 1. Clone down repository.

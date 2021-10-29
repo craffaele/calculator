@@ -20,7 +20,7 @@ const format = (expression) => {
   };
 
   const parenStart = expression.indexOf('(');
-  if (expression.indexOf('(') !== -1) {
+  if (parenStart !== -1) {
     if (checkBalancedParens(expression, parenStart) === false) {
       return 'Parens not balanced.'
     }

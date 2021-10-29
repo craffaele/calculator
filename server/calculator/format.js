@@ -1,6 +1,6 @@
 const evaluate = require('./evaluate');
 
-const ratify = (expression) => {
+const format = (expression) => {
 
   // check parens first. if they aren't balanced, we're done here!
   const checkBalancedParens = function(input, firstIndex) {
@@ -63,4 +63,4 @@ const ratify = (expression) => {
   return evaluate(formattedExpression);
 }
 
-module.exports = ratify;
+module.exports = format;

@@ -1,5 +1,5 @@
 const express = require('express');
-const ratify = require('./calculator/ratify');
+const format = require('./calculator/format');
 const app = express()
 const port = 3000
 const cors = require('cors')
@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 app.get('/calculate', (req, res) => {
   console.log('ping:', req.query.expression);
-  const result = ratify(req.query.expression);
+  const result = format(req.query.expression);
   console.log('FINAL RESULT:', typeof result, result);
   if (result === Infinity) {
     res.send({result: '∞'});

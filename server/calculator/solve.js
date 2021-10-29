@@ -12,6 +12,7 @@ const solve = (exp, op, opIndex) => {
   }
   let firstInt = Number(exp[opIndex-1]);
   let secondInt = Number(exp[opIndex+1]);
+  console.log('exp:', firstInt, secondInt);
   // replace expression slice with evaluation.
   const sliceResult = doTheMath(firstInt, secondInt, op);
   exp.splice(opIndex - 1, 3, sliceResult);

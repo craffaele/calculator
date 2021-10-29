@@ -43,21 +43,28 @@ export default function Calculator(props) {
   // further untangle and improve this code while preserving its functionality.
   const filterOperatorInput = (input) => {
 
-    const operators = [
-      '-',
-      '+',
-      '*',
-      '/',
-      '=',
-      '.'
-    ];
+    const operators = ['-', '+', '*', '/', '=','.'];
+    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const parens = ['(', ')'];
     let newInput = input;
     const previousInputChar = inputValue.slice(-1);
-    const previousTwoInputChars = inputValue.slice(-2);
+    const previousTwoInputChars = inputValue.slice(-2);;
     const currentInputChar = input.slice(-1);
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
+
+    const secondMinusAllowed =
+    (digits.includes(previousTwoInputChars[0]) || previousTwoInputChars[0] === ')')
+    && previousTwoInputChars[1] === '-';
+    console.log('second minus allowed:', secondMinusAllowed);
+
+    // console.log('current input char:', currentInputChar);
+    console.log('previous two input chars at 0:', previousTwoInputChars[0]);
+    console.log('previous two input chars at 1:', previousTwoInputChars[1]);
+    // console.log('previous input char:', previousInputChar);
+    // console.log('previous two input char:', previousTwoInputChars);
+
+
 
     if (
       //...we're at the beginning of a new string, entering just an
@@ -83,12 +90,15 @@ export default function Calculator(props) {
       && !attemptingDelete
     ) {
       newInput = inputValue;
+      console.log('ding');
     } else if (
       //...we're trying to enter an operator and the previous input was also an operator
       // don't allow entry. this prevents input of sucessive operators generally.
       operators.includes(previousInputChar)
-      && operators.slice(1).includes(currentInputChar)
+      && operators.includes(currentInputChar)
+      && !secondMinusAllowed
       ) {
+        console.log('operator blocked!')
       newInput = inputValue;
     } else if (
       currentInputChar === '.'

@@ -29,6 +29,7 @@ const ratify = (expression) => {
   // splits arithmetic string along operators while keeping the operators in as delimiters.
   // exception is '-', which is kept appended to beginning of integer strings.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
+  console.log('split expression:', splitExpression);
 
   // insert '-' between any two integers wihtout operators between them.
   // this would be owing to the fact that '-' remains attached to integers.

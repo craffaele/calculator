@@ -24,7 +24,7 @@ const evaluate = (expression) => {
   // which will slice out the paren expressions left-to-right and pass them back through here for evaluation.
   // these slices will be replaced in our larger expression with their resulting evaluations.
 
-  // although we've previously checked for parens in our ratify function, we need another check here given
+  // although we've previously checked for parens in our format function, we need another check here given
   // the recursive nature of this evaluate function.
 
   const parenStart = expression.indexOf('(');
@@ -55,7 +55,6 @@ const evaluate = (expression) => {
       /// and using that index, store a reference to the operator itself as well.
       let currentOp = exp[opIndex];
       while (opIndex !== -1) {
-        console.log('loop');
         exp = solve(exp, currentOp, opIndex);
         // reassign operator index.
         opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));

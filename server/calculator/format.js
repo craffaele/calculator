@@ -29,8 +29,6 @@ const format = (expression) => {
   // splits arithmetic string along operators while keeping the operators in as delimiters.
   // exception is '-', which is kept prepended to the beginning of integer strings.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
-  console.log('split expression:', splitExpression);
-
 
   // format arithmetic array by creating a new copy with correct operators. see below.
   let formattedExpression = [];
@@ -50,9 +48,9 @@ const format = (expression) => {
       continue;
     }
 
-    // insert '-' between any two integers without operators between them.
+    // insert '+' between any two integers without operators between them.
     // this would be owing to the fact that '-' remains prepended to integers according to our regex.
-    // so instead of subtracting per se, in most cases we're adding negatives together.
+    // so instead of subtracting per se, in most cases we will be adding negatives together.
     formattedExpression.push(currentItem);
     if (!isNaN(Number(currentItem)) && !isNaN(Number(nextItem))) {
       formattedExpression.push('+');

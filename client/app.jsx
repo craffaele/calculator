@@ -87,6 +87,7 @@ export default function Calculator(props) {
       operators.includes(previousInputChar)
       && operators.includes(currentInputChar)
       && !secondMinusAllowed
+      && !attemptingDelete
       ) {
       newInput = inputValue;
     } else if (

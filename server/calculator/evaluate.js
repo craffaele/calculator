@@ -54,16 +54,12 @@ const evaluate = (expression) => {
       let opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));
       /// and using that index, store a reference to the operator itself as well.
       let currentOp = exp[opIndex];
-      let check = 0;
-      while (opIndex !== -1 && check < 10) {
+      while (opIndex !== -1) {
         console.log('loop');
-        console.log('opIndex:', opIndex);
-
         exp = solve(exp, currentOp, opIndex);
         // reassign operator index.
         opIndex = findNextOperatorIndex(exp, exp.indexOf(op[0]), exp.indexOf(op[1]));
         currentOp = exp[opIndex];
-        check++;
       }
     }
     // since any items left in this array will have been evaluated to integers and stripped of parens,

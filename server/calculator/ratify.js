@@ -27,22 +27,38 @@ const ratify = (expression) => {
   }
 
   // splits arithmetic string along operators while keeping the operators in as delimiters.
-  // exception is '-', which is kept appended to beginning of integer strings.
+  // exception is '-', which is kept prepended to the beginning of integer strings.
   const splitExpression = expression.split(/(?=[+\-/*()])|(?<=[+/*()])/g);
   console.log('split expression:', splitExpression);
 
-  // insert '-' between any two integers wihtout operators between them.
-  // this would be owing to the fact that '-' remains attached to integers.
-  // instead of subtracting per se, in most cases we're adding negatives together.
+
+  // format arithmetic array by creating a new copy with correct operators. see below.
   let formattedExpression = [];
-  for (let i =0; i< splitExpression.length; i++) {
-    let currentItem = splitExpression[i];
-    let nextItem = splitExpression[i + 1];
+  for (let i = 0; i< splitExpression.length; i++) {
+    const currentItem = splitExpression[i];
+    const nextItem = splitExpression[i + 1];
+    const prevItem = splitExpression[i - 1];
+
+    // this logic replaces any double minus operators that remain with a '+'.
+    // the ONLY case for this is when you have an expression with '--' just before a '('.
+    // in that case, our regex would not have known to leave the '-' prepended.
+    if (currentItem === '-' && nextItem === '-') {
+      continue;
+    }
+    if (currentItem === '-' && prevItem === '-') {
+      formattedExpression.push('+');
+      continue;
+    }
+
+    // insert '-' between any two integers without operators between them.
+    // this would be owing to the fact that '-' remains prepended to integers according to our regex.
+    // so instead of subtracting per se, in most cases we're adding negatives together.
     formattedExpression.push(currentItem);
     if (!isNaN(Number(currentItem)) && !isNaN(Number(nextItem))) {
       formattedExpression.push('+');
     }
   }
+  console.log('formatted expression:', formattedExpression);
   // proceed to evaluation with formatted expression.
   return evaluate(formattedExpression);
 }

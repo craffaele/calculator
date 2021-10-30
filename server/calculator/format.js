@@ -1,24 +1,9 @@
 const evaluate = require('./evaluate');
+const checkBalancedParens = require('./check').checkBalancedParens;
 
 const format = (expression) => {
 
-  // check parens first. if they aren't balanced, we're done here!
-  const checkBalancedParens = function(input, firstIndex) {
-    let parenStack = [];
-    for (let i = firstIndex; i < input.length; i++) {
-      let current = input[i];
-      if (current === '(') {
-        parenStack.push(current);
-      } else if (current === ')') {
-        if (parenStack.length === 0) {
-          return false;
-        }
-        parenStack.pop();
-      }
-    }
-    return parenStack.length > 0 ? false : true;
-  };
-
+  // check parens balance first. if they aren't balanced, we're done here!
   const parenStart = expression.indexOf('(');
   if (parenStart !== -1) {
     if (checkBalancedParens(expression, parenStart) === false) {

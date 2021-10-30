@@ -19,7 +19,7 @@ Premium features under development for paid users:
 
 ## Usage
 
-Submit entry to the server evaluation with Enter or '='. 
+Submit entry to the server for evaluation with Enter or '='. 
 The result is returned to the input field for the user to perform further calculations with (or clear).
 
 Controlled input prohibits entry of any non-numeric or non-operator characters. More than one successive operator is disallowed with the exception of '-', two of which are permitted only when entered between integers (or paren expressions that will evaluate to integers). Only one decimal is permitted per number. Any expression that evaluates to infinity will return '∞' without error, but the next entry will then clear the input field since no further meaningful operations can be performed with infinity (as far as I know).

@@ -1,4 +1,4 @@
-// since our client restricts entry of all but two invalid inputs, unabalanced parens and hanging
+// since our client restricts entry of all but two invalid inputs, unbalanced parens and hanging
 // operators, we only need to check parens here. additional checkers for future versions of this application,
 // particularly one that supports command line submission, will live in this file and very likely check things
 // like decimals and successive operators. hanging operators are otherwise found and errored during

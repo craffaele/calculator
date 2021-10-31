@@ -37,10 +37,8 @@ export default function Calculator(props) {
   const containerRef = useRef(null);
 
   // receives proposed changes to inputValue state from each of our components and filters/restricts them.
-  // this admittedly brash code serves the purpose of significantly restricting
-  // user input of operators to reduce the potential for errors, which preserves server resources
-  // and makes for a more intuitive user experience. with more time and code review, I would seek to
-  // further untangle and improve this code while preserving its functionality.
+  // serves the purpose of significantly restricting operator input to reduce the potential for errors
+  // and make for a more intuitive user experience.
   const filterOperatorInput = (input) => {
     let newInput = input;
     const operators = ['-', '+', '*', '/', '=','.'];
@@ -50,7 +48,7 @@ export default function Calculator(props) {
     const previousTwoInputChars = inputValue.slice(-2);;
     const currentInputChar = input.slice(-1);
 
-    // store reference to several boolean conditions within variables.
+    // store reference to boolean conditions within variables.
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
     const secondMinusAllowed =
@@ -95,9 +93,9 @@ export default function Calculator(props) {
       && !decimalAllowed
       && !attemptingDelete
       ) {
-      //...we're trying to enter a decimal and we have already done so for this number string, disallow.
       newInput = inputValue;
     } else if (
+      //...we're trying to enter a decimal and we have already done so for this number string, disallow.
       currentInputChar === '.'
       && decimalAllowed
       ) {

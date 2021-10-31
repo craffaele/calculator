@@ -33,6 +33,7 @@ const evaluate = (expression) => {
     return evaluate(newExpression);
   }
 
+  // parse expressions from our larger arithmetic string and send them to solver function.
   const parseExpressions = (exp) => {
     const operators = [['*', '/'], ['+', '-']];
     for (let op of operators) {

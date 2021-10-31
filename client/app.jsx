@@ -37,8 +37,7 @@ export default function Calculator(props) {
   const containerRef = useRef(null);
 
   // receives proposed changes to inputValue state from each of our components and filters/restricts them.
-  // serves the purpose of significantly restricting operator input to reduce the potential for errors
-  // and make for a more intuitive user experience.
+  // serves the purpose of significantly restricting operator input to reduce the potential for errors.
   const filterOperatorInput = (input) => {
     let newInput = input;
     const operators = ['-', '+', '*', '/', '=','.'];

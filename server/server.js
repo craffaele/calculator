@@ -7,10 +7,6 @@ const cors = require('cors')
 app.use(express.static('./public'))
 app.use(cors())
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.get('/calculate', (req, res) => {
   const result = format(req.query.expression);
   if (result === Infinity) {

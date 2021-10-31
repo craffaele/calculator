@@ -50,6 +50,7 @@ export default function Calculator(props) {
     // store reference to boolean conditions within variables.
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
+    const negativeAfterOp = operators.slice(1).includes(previousInputChar) && currentInputChar === '-';
     const secondMinusAllowed =
     (digits.includes(previousTwoInputChars[0]) || previousTwoInputChars[0] === ')')
     && previousTwoInputChars[1] === '-';
@@ -83,6 +84,7 @@ export default function Calculator(props) {
       // don't allow entry. this prevents input of sucessive operators generally.
       operators.includes(previousInputChar)
       && operators.includes(currentInputChar)
+      && !negativeAfterOp
       && !secondMinusAllowed
       && !attemptingDelete
       ) {

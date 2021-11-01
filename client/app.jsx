@@ -53,7 +53,7 @@ export default function Calculator(props) {
     const negativeAfterOp = operators.slice(1).includes(previousInputChar) && currentInputChar === '-';
     const secondMinusAllowed =
     (digits.includes(previousTwoInputChars[0]) || previousTwoInputChars[0] === ')')
-    && previousTwoInputChars[1] === '-';
+    && previousTwoInputChars[1] === '-' && currentInputChar === '-';
 
     if (
       //...we're at the beginning of a new string, entering just an

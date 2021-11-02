@@ -34,28 +34,22 @@ describe ('parens', () => {
     expect(format('((3+3)-(64)))')).toBe('Parens not balanced.')
     expect(format('(97/((34)')).toBe('Parens not balanced.')
   });
-});
 
-describe ('parens', () => {
-  it ('should handle nested parens', () => {
-    expect(format('((((((7)))))3)')).toBe(21);
-    expect(format('((((((((((((((((16+2))))))))))))))))')).toBe(18);
-  });
-
-  it ('should multiply adjacent paren expressions', () => {
-    expect(format('(3)(3)')).toBe(9);
-    expect(format('(3)3')).toBe(9);
-  });
-
-  it ('should catch unbalanced parens', () => {
-    expect(format('((3+3)-(64)))')).toBe('Parens not balanced.')
-    expect(format('(97/((34)')).toBe('Parens not balanced.')
+  it ('should handle double minus just before parens', () => {
+    expect(format('50--(25+25)')).toBe(100);
   });
 });
 
 describe ('floats', () => {
   it ('should handle floats with precision', () => {
     expect(format('0.1+0.2')).toBe(0.3);
+  });
+});
+
+describe ('invalid inputs', () => {
+  it ('should return NaN for invalid/ broken inputs', () => {
+    expect(format('12+)34-')).toBe(NaN);
+    expect(format('20+(23-)')).toBe(NaN);
   });
 });
 

@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function Keypad({inputs, inputValue, pressedKey, updateInput, filter, submit}) {
+export default function Keypad({inputs, filter, submit}) {
+
+  const inputValue = useSelector(state => state.inputValue);
+  const pressedKey = useSelector(state => state.pressedKey);
 
   const handleClick = (e) => {
     const { id } = e.target;

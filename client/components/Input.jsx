@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { setPressedKey } from '../actions';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function Input({inputRef, inputs, setPressedKey, inputValue, updateInput, filter, submit}) {
+export default function Input({inputRef, inputs, filter, submit}) {
+
+  const dispatch = useDispatch();
+  const inputValue = useSelector(state => state.inputValue);
 
   const handleChange = (e) => {
     filter(e.target.value);
@@ -23,7 +28,7 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault();
     }
-    setPressedKey(pressedKey)
+    dispatch(setPressedKey(pressedKey))
   }
 
   const restrictMouseDown = (e) => {
@@ -41,7 +46,7 @@ export default function Input({inputRef, inputs, setPressedKey, inputValue, upda
     ref={inputRef}
     onChange={handleChange}
     onKeyDown={handlePressedKey}
-    onKeyUp={() => setPressedKey('')}
+    onKeyUp={() => dispatch(setPressedKey(''))}
     value={inputValue}
     onMouseDown={restrictMouseDown}
     />

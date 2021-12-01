@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Input from './components/Input.jsx';
 import Keypad from './components/Keypad.jsx';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDecimalAllowed, updateInput  } from './actions/index.js';
 
 export default function Calculator(props) {
-  const [inputValue, updateInput] = useState('');
-  const [pressedKey, setPressedKey] = useState('');
-  const [decimalAllowed, setDecimalAllowed] = useState(true);
+  const dispatch = useDispatch();
+  const inputValue = useSelector(state => state.inputValue);
+  const decimalAllowed = useSelector(state => state.decimalAllowed);
 
   const inputs = [
     '(',
@@ -44,9 +46,8 @@ export default function Calculator(props) {
     const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const parens = ['(', ')'];
     const previousInputChar = inputValue.slice(-1);
-    const previousTwoInputChars = inputValue.slice(-2);;
+    const previousTwoInputChars = inputValue.slice(-2);
     const currentInputChar = input.slice(-1);
-
     // store reference to boolean conditions within variables.
     const attemptingDelete = input.length < inputValue.length;
     const newArithmeticString = inputValue === '' || parens.includes(previousInputChar);
@@ -115,7 +116,7 @@ export default function Calculator(props) {
       newInput = input.slice(1);
     }
     // finally, submit new input to state.
-    updateInput(newInput);
+    dispatch(updateInput(newInput));
     inputRef.current.focus();
   }
 
@@ -137,14 +138,14 @@ export default function Calculator(props) {
         } else {
           updatedDisplay = res.data.result.toString();
         }
-        updateInput(updatedDisplay);
+        dispatch(updateInput(updatedDisplay));
       })
       .catch((err) => {
         if (err !== 'Parens not balanced.') {
           err = 'Invalid input.';
         }
         alert(err);
-        updateInput('');
+        dispatch(updateInput(''));
       })
   }
 
@@ -167,18 +168,14 @@ export default function Calculator(props) {
     >
       <Input
       inputRef={inputRef}
-      setPressedKey={setPressedKey}
       inputValue={inputValue}
       inputs={inputs}
-      updateInput={updateInput}
       filter={filterOperatorInput}
       submit={submitExpression}
        />
       <Keypad
       inputs={inputs}
-      pressedKey={pressedKey}
       inputValue={inputValue}
-      updateInput={updateInput}
       filter={filterOperatorInput}
       submit={submitExpression}
        />
